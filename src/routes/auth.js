@@ -1,8 +1,11 @@
 import express  from 'express';
 import passport from 'passport';
+import jwt from 'jsonwebtoken';
+require('dotenv').config()
+
 const router = express.Router();
 router.post('/register', (req, res, next) => {
-  let cj = passport.authenticate('local', (err, user, info) => {
+  passport.authenticate('local', (err, user, info) => {
     if(info) {
       return res.status(401).json({error: info})
     }
@@ -16,7 +19,13 @@ router.post('/register', (req, res, next) => {
       if(err) {
         return res.status(400).json({error: err})
       }
-      return res.status(200).json({success: `logged in ${user.id}`});
+      const token = jwt.sign({
+        userId: user.id,
+        role: user.role
+      },process.env.JWT_KEY, {
+        expiresIn: '245hrs'
+      })
+      return res.status(200).json({success: `logged in ${user.id}`, token: token});
     });
   })(req, res, next)
 })
