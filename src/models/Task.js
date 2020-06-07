@@ -2,8 +2,9 @@ import mongoose from 'mongoose'
 const Schema = mongoose.Schema
 
 //create user
-const UserSchema = new Schema(
+const TaskSchema = new Schema(
   {
+    _id: Schema.Types.ObjectId,
     story: {
       type: String,
       required: true,
@@ -16,6 +17,15 @@ const UserSchema = new Schema(
       type: Number,
     },
     requester: {
+      required: true,
       type: String
-    }
+    },
+    comments: [{
+      type: Schema.Types.ObjectId,
+      ref: "comment"
+    }]
   })
+  
+  const Task = mongoose.model('Task', TaskSchema)
+
+  export default Task;

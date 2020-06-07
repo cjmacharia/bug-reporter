@@ -10,12 +10,19 @@ export const updateSuccess = (response, data) => {
 		data: data});
 };
 export const validationError = (res, err) => {
-	res.status(403).json({
-		error: err.message
-	});
+	if(err) {
+		res.status(403).json({
+			error: err.message
+		});
+	} else {
+		res.status(404).json({
+			error: 'an error occured'
+		});
+	}
+
 };
 
-export const locationDetailsError = (res, err) => {
+export const DetailsError = (res, err) => {
 	res.status(403).json({
 		error: err
 	});
@@ -35,7 +42,7 @@ export const getResultsSuccess = (res, results) => {
 };
 
 export const successfullResponse = (res) => {
-	res.status(200).json({
+	res.json({
 		message: 'operation successfull'
 	});
 };

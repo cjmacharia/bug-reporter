@@ -3,8 +3,12 @@ import bycrpt from 'bcryptjs';
 import passport from 'passport';
 import { Strategy } from 'passport-local';
 import * as response from '../utils/responses.js'
+
+require('dotenv').config()
 // the user id is saved in the session and later used o retrieve the whole object via the deserializer
 //serializeUser determines which date of the user object should be stored in teh session 
+  //VERIFY SECRET USED IS VALID
+
 passport.serializeUser((user, done) => {
   done (null, user.id);
 });
@@ -48,5 +52,6 @@ passport.use(new Strategy({usernameField: 'email'}, (email, password, done) => {
       return done(null, false, {message: err})
     })
 }))
+
 
 export default passport;
