@@ -21,6 +21,11 @@ export const validationError = (err, res) => {
 	}
 
 };
+export const FrobiddenAction = (res) => {
+	res.status(403).json({
+		error: 'forbidden action'
+	});
+};
 
 export const DetailsError = (err, res) => {
 	res.status(403).json({
