@@ -1,28 +1,28 @@
-export const creationSuccess = (response, data) => {
+export const creationSuccess = (data, response) => {
 	response.status(201).json({
 		message: 'successfully created',
 		data: data});
 };
 
-export const updateSuccess = (response, data) => {
+export const updateSuccess = (data, response) => {
 	response.status(200).json({
 		message: 'successfully updated',
 		data: data});
 };
-export const validationError = (res, err) => {
-	if(err) {
-		res.status(403).json({
-			error: err.message
-		});
-	} else {
+export const validationError = (err, res) => {
+	if(!err) {
 		res.status(404).json({
 			error: 'an error occured'
+		});
+	} else {
+		res.status(403).json({
+			error: err.message
 		});
 	}
 
 };
 
-export const DetailsError = (res, err) => {
+export const DetailsError = (err, res) => {
 	res.status(403).json({
 		error: err
 	});
@@ -35,7 +35,7 @@ export const NotFoundError = (res, err) => {
 };
 
 
-export const getResultsSuccess = (res, results) => {
+export const getResultsSuccess = (results, res) => {
 	res.status(200).json({
 		data: results
 	});
@@ -59,7 +59,7 @@ export const invalidIdError = (res) => {
   });
   };
 
-export const nothingFound = (res, err) => {
+export const nothingFound = (err, res) => {
 	res.status(404).json({
 		error: err
 	});	

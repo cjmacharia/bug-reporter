@@ -1,10 +1,10 @@
-import * as queries from '../utils/queries'
+import * as queries from '../utils/storyQueries'
 import * as response from '../utils/responses'
 export const createStory = async(req, res) => {
   try {
-    await queries.createStoryQuery (res, req)  
+    await queries.createStoryQuery (req, res)  
   } catch(err) {
-      await response.serverError(res, err)
+      await response.serverError(err, res)
   }
 }
 
@@ -13,7 +13,7 @@ export const editStory = async(req, res) => {
     await queries.editStoryQuery (req, res)  
   } catch(err) {
     console.log(err)
-      await response.serverError(res, err)
+      await response.serverError(err, res)
   }
 }
 
@@ -22,7 +22,7 @@ export const getStories = async(req, res) => {
     await queries.getAllStories(req, res)  
   } catch(err) {
     console.log(err)
-      await response.serverError(res, err)
+      await response.serverError(err, res)
   }
 }
 
@@ -30,7 +30,7 @@ export const getOneStory = async(req, res) => {
   try {
     await queries.getOneStory (req, res)  
   } catch(err) {
-      await response.serverError(res, err)
+      await response.serverError(err, res)
   }
 }
 
@@ -38,7 +38,8 @@ export const deleteStory = async(req, res) => {
   try {
     await queries.deleteStoryQuery (req, res)  
   } catch(err) {
-      await response.serverError(res, err)
+      await response.serverError(err, res)
   }
 }
+
 

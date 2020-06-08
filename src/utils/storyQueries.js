@@ -1,7 +1,7 @@
 import Task from '../models/Task'
 import mongoose from 'mongoose';
 import * as responses from './responses'
-export const createStoryQuery = async(res,req) => {
+export const createStoryQuery = async(req, res) => {
   const newStory = new Task({
     _id:  new mongoose.Types.ObjectId(),
     story: req.body.story,
@@ -11,9 +11,9 @@ export const createStoryQuery = async(res,req) => {
   })
   newStory.save((err, story) => {
     if(err) {
-      responses.validationError(res, err)
+      responses.validationError(err, res)
     } else {
-      responses.creationSuccess(res, story)
+      responses.creationSuccess(story, res)
     }
   })
 }
@@ -21,34 +21,30 @@ export const createStoryQuery = async(res,req) => {
 export const editStoryQuery = async (req, res) => {
   await Task.findByIdAndUpdate(req.params.id,  req.body, {new: true}).exec()
   .then(story => {
-    responses.updateSuccess(res, story);
+    responses.updateSuccess(story, res);
   }).catch(err => {
-    responses.validationError(res, err)
+    responses.validationError(err, res)
   })
 };
 export const getAllStories = async (req, res) => {
-  await Task.find({}, (err, result) => {
-    if (err) {
-      responses.validationError(res, err)
-   } else {
-    responses.getResultsSuccess(res, result);
-  }
+  await Task.find({}).populate('comments').then(result => {
+    responses.getResultsSuccess(result, res);
+  }).catch(err => {
+      responses.validationError(err, res)
   })
 }
 
 export const getOneStory = async (req, res) => {
-  await Task.find({_id: req.params.id}, (err, result) => {
-    if (err) {
-      responses.validationError(res, err)
-   } else {
-    responses.getResultsSuccess(res, result);
-  }
+  await Task.find({_id: req.params.id}).populate('comments') .then(result => {
+    responses.getResultsSuccess(result, res);
+  }).catch(err => {
+      responses.validationError(err, res)
   })
 }
 export const deleteStoryQuery = async (req, res) => {
     await Task.findByIdAndRemove(req.params.id, (err, data) => {
       if(err || ! data) {
-       responses.validationError(res, err);
+       responses.validationError(err, res);
       } else  {
        responses.successfullResponse(res);
       }
