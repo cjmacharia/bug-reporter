@@ -16,6 +16,7 @@ const TaskSchema = new Schema(
     },
     points: {
       type: Number,
+      default: 0
     },
     requester: {
       required: true,

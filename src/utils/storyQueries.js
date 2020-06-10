@@ -1,4 +1,5 @@
 import Task from '../models/Task'
+import Project from '../models/Project'
 import mongoose from 'mongoose';
 import * as responses from './responses'
 export const createStoryQuery = async(req, res) => {
@@ -9,12 +10,15 @@ export const createStoryQuery = async(req, res) => {
     points: req.body.points,
     requester: req.user.email
   })
-  newStory.save((err, story) => {
-    if(err) {
+  newStory.save().then(story => {
+    Project.findByIdAndUpdate(req.params.pid, 
+      {$push: {tasks: story._id}}, {new:true}).populate('Task').then(result => {
+        responses.creationSuccess(result, res)
+      }).catch(err => {
       responses.validationError(err, res)
-    } else {
-      responses.creationSuccess(story, res)
-    }
+      })
+  }).catch(err => {
+      responses.validationError(err, res)
   })
 }
 
