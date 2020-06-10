@@ -1,13 +1,14 @@
 import mongoose from 'mongoose'
 const Schema = mongoose.Schema
-
 //create user
 const TaskSchema = new Schema(
   {
     _id: Schema.Types.ObjectId,
+    
     story: {
       type: String,
       required: true,
+      unique: true
 
     },
     storyType: {
@@ -15,6 +16,7 @@ const TaskSchema = new Schema(
     },
     points: {
       type: Number,
+      default: 0
     },
     requester: {
       required: true,
@@ -22,7 +24,7 @@ const TaskSchema = new Schema(
     },
     comments: [{
       type: Schema.Types.ObjectId,
-      ref: "comment"
+      ref: "Comment"
     }]
   })
   

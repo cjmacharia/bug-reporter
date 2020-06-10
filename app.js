@@ -5,6 +5,9 @@ import passport from './src/passport/setup';
 // import { Strategy } from 'passport-google-oauth2'
 // import ids from './oauth'
 import storyRoutes from './src/routes/task'
+import commentsRoutes from './src/routes/comments'
+import projectRoutes from './src/routes/project'
+
 import auth from './src/routes/auth'
 import session from 'express-session';
 import connectMongo from 'connect-mongo'
@@ -13,6 +16,8 @@ require('dotenv').config()
 const app = express();
 app.use(bodyParser.json())
 storyRoutes(app)
+commentsRoutes(app)
+projectRoutes(app)
 //EXPRESS Session
 // app.use(session ({
 //   secret: 'this is a secret',
