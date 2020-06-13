@@ -18,14 +18,26 @@ const TaskSchema = new Schema(
       type: Number,
       default: 0
     },
+    priority: {
+      type: String,
+      enum: ['Low', 'Medium', 'High'],
+      default: 'Low'
+    },
     requester: {
       required: true,
+      type: String
+    },
+    owner: {
       type: String
     },
     comments: [{
       type: Schema.Types.ObjectId,
       ref: "Comment"
-    }]
+    }],
+    updateAt: {
+      type: Date,
+      default: new Date(),
+    },
   })
   
   const Task = mongoose.model('Task', TaskSchema)

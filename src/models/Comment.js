@@ -13,6 +13,10 @@ const CommentSchema = new Schema(
       required: true,
       type: String
     },
+    updateAt: {
+      type: Date,
+      default: new Date(),
+    },
   }
 )
 

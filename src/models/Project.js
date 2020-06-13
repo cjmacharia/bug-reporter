@@ -8,18 +8,26 @@ const ProjectSchema = new Schema(
       type: String,
       required: true
     },
-    privacy: {
+    privacy: {  // is the project private or nah 
       type: Boolean,
       default: false
     },
-    owner: {
+    owner: {   //project created
       required: true,
       type: String
     },
-    tasks: [{
+    tasks: [{  // tasks that belong to this project 
       type: Schema.Types.ObjectId,
       ref: "Task"
-    }]
+    }],
+    users: [{   //array of project authorised users 
+      type: String,
+      ref: 'User',
+    }],
+    updateAt: {
+      type: Date,
+      default: new Date(),
+    },
   }
 )
 
